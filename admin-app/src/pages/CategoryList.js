@@ -43,6 +43,7 @@ const CategoryList = () => {
         dispatch(resetState());
         dispatch(getCategories());
     }, []);
+    
     const prodCategoryState = useSelector((state) => state.prodCategory.prodCategories);
     const data1 = [];
     for (let i = 0; i < prodCategoryState.length; i++) {
