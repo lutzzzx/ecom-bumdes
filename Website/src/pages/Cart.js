@@ -5,10 +5,15 @@ import seladaImg from "../images/products/selada.png";
 import { TbTrash } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCartProduct, getUserCart } from "../features/user/userSlice";
+import {
+  deleteCartProduct,
+  getUserCart,
+  updateCartProduct,
+} from "../features/user/userSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
+
   const userCartState = useSelector((state) => state.auth.cartProducts);
   useEffect(() => {
     dispatch(getUserCart());
@@ -18,6 +23,30 @@ const Cart = () => {
     setTimeout(() => {
       dispatch(getUserCart());
     }, 200);
+  };
+
+  const [productUpdateDetail, setProductUpdateDetail] = useState(null);
+  useEffect(() => {
+    dispatch(
+      updateCartProduct({
+        cartItemId: productUpdateDetail?.cartItemId,
+        quantity: productUpdateDetail?.quantity,
+      })
+    );
+    setTimeout(() => {
+      dispatch(getUserCart());
+    }, 300);
+  }, [productUpdateDetail]);
+
+  // Menghitung total belanja
+  const calculateCartTotal = () => {
+    let total = 0;
+    if (userCartState) {
+      userCartState.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+    }
+    return total;
   };
 
   if (userCartState?.length === 0) {
@@ -61,11 +90,14 @@ const Cart = () => {
               {userCartState &&
                 userCartState?.map((item, index) => {
                   return (
-                    <div className="items">
+                    <div className="items" key={item._id}>
                       <div className="row">
                         <div className="col-2">
-                          <div className="img-wrapper ">
-                            <img src={item?.productId?.images[0]?.url}></img>
+                          <div className="img-wrapper">
+                            <img
+                              src={item?.productId?.images[0]?.url}
+                              alt="Product"
+                            />
                           </div>
                         </div>
                         <div className="col-3">
@@ -80,7 +112,17 @@ const Cart = () => {
                             max={10}
                             className="form-control"
                             id=""
-                            value={item?.quantity}
+                            value={
+                              productUpdateDetail?.quantity
+                                ? productUpdateDetail?.quantity
+                                : item?.quantity
+                            }
+                            onChange={(e) => {
+                              setProductUpdateDetail({
+                                cartItemId: item._id,
+                                quantity: e.target.value,
+                              });
+                            }}
                           />
                         </div>
                         <div className="col-2">
@@ -90,7 +132,7 @@ const Cart = () => {
                           <div
                             className="trash"
                             onClick={() => {
-                              deleteACartProduct(item?._id);
+                              deleteACartProduct(item._id);
                             }}
                           >
                             <TbTrash />
@@ -109,7 +151,7 @@ const Cart = () => {
             <div className="item">Clear Shopping Cart</div>
           </div>
           <div className="total">
-            <h5>Cart Total: IDR 35.000</h5>
+            <h5>Cart Total: IDR {calculateCartTotal()}</h5>
             <p>Taxes and shipping calculated at checkout</p>
             <Link to={"/checkout"}>Checkout</Link>
           </div>

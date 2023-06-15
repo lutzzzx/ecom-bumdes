@@ -62,6 +62,7 @@ const ProductCard = (props) => {
                     <AiOutlineHeart />
                   </Link>
                   <Link
+                    className="hidden"
                     onClick={() => {
                       uploadCart(item?._id);
                     }}
