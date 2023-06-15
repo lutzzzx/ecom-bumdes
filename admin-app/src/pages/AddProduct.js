@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import CustomInput from '../components/CustomInput';
 import ReactQuill from 'react-quill';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import { toast } from "react-toastify";
@@ -10,7 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../features/prodCategory/prodCategorySlice';
 import Dropzone from 'react-dropzone'
 import { deleteImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts, resetState } from '../features/product/productSlice';
+import { 
+    createProducts,
+    getAProduct,
+    updateAProduct,
+    resetState
+} from '../features/product/productSlice';
 
 
 let schema = Yup.object().shape({
@@ -23,6 +28,8 @@ let schema = Yup.object().shape({
 
 const AddProduct = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const getProdId = location.pathname.split("/")[3];
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
 
@@ -32,7 +39,13 @@ const AddProduct = () => {
     const categoryState = useSelector((state) => state.prodCategory.prodCategories);
     const imgState = useSelector((state) => state.upload.images);
     const newProduct = useSelector((state) => state.product);
-    const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+    const {
+        isSuccess, 
+        isError, 
+        isLoading, 
+        createdProduct,
+        updatedProduct,
+    } = newProduct;
     useEffect(() => {
         if (isSuccess && createdProduct) {
             toast.success('Product Added Successfully!')
@@ -53,6 +66,23 @@ const AddProduct = () => {
         formik.values.images = img;
     }, [img]);
 
+    useEffect(() => {
+        if (getProdId !== undefined) {
+            dispatch(getAProduct(getProdId));
+        } else {
+            dispatch(resetState());
+        }
+    }, [getProdId]);
+    useEffect(() => {
+        if (isSuccess && updatedProduct) {
+            toast.success("Product Updated Successfully!");
+            navigate("/admin/product-list");
+        }
+        if (isError) {
+            toast.error("Something Went Wrong!");
+        }
+    }, [isSuccess, isError, isLoading]);
+
     const formik = useFormik({
         initialValues: {
             title: '',
@@ -64,11 +94,17 @@ const AddProduct = () => {
         },
         validationSchema: schema,
         onSubmit: values => {
-            dispatch(createProducts(values));
-            formik.resetForm();
-            setTimeout(() => {
-                dispatch(resetState());
-            }, 3000);
+            if (getProdId !== undefined) {
+                const data = { id: getProdId, prodData: values};
+                dispatch(updateAProduct(data));
+                dispatch(resetState())
+            } else {
+                dispatch(createProducts(values));
+                formik.resetForm();
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 300);
+            }
         },
     });
     return (

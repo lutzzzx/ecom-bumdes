@@ -37,6 +37,7 @@ const CategoryList = () => {
     const hideModal = () => {
         setOpen(false);
     };
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(resetState());
