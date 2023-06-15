@@ -28,8 +28,6 @@ let schema = Yup.object().shape({
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const location = useLocation();
-    const getProdId = location.pathname.split("/")[3];
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
 
@@ -39,13 +37,7 @@ const AddProduct = () => {
     const categoryState = useSelector((state) => state.prodCategory.prodCategories);
     const imgState = useSelector((state) => state.upload.images);
     const newProduct = useSelector((state) => state.product);
-    const {
-        isSuccess, 
-        isError, 
-        isLoading, 
-        createdProduct,
-        updatedProduct,
-    } = newProduct;
+    const { isSuccess, isError, isLoading, createdProduct } = newProduct;
     useEffect(() => {
         if (isSuccess && createdProduct) {
             toast.success('Product Added Successfully!')
@@ -66,23 +58,6 @@ const AddProduct = () => {
         formik.values.images = img;
     }, [img]);
 
-    useEffect(() => {
-        if (getProdId !== undefined) {
-            dispatch(getAProduct(getProdId));
-        } else {
-            dispatch(resetState());
-        }
-    }, [getProdId]);
-    useEffect(() => {
-        if (isSuccess && updatedProduct) {
-            toast.success("Product Updated Successfully!");
-            navigate("/admin/product-list");
-        }
-        if (isError) {
-            toast.error("Something Went Wrong!");
-        }
-    }, [isSuccess, isError, isLoading]);
-
     const formik = useFormik({
         initialValues: {
             title: '',
@@ -94,17 +69,11 @@ const AddProduct = () => {
         },
         validationSchema: schema,
         onSubmit: values => {
-            if (getProdId !== undefined) {
-                const data = { id: getProdId, prodData: values};
-                dispatch(updateAProduct(data));
-                dispatch(resetState())
-            } else {
-                dispatch(createProducts(values));
-                formik.resetForm();
-                setTimeout(() => {
-                    dispatch(resetState());
-                }, 300);
-            }
+            dispatch(createProducts(values));
+            formik.resetForm();
+            setTimeout(() => {
+                dispatch(resetState());
+            }, 3000);
         },
     });
     return (
