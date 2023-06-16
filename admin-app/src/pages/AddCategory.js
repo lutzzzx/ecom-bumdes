@@ -37,7 +37,7 @@ const AddCategory = () => {
         if (isError) {
             toast.error('Something Went Wrong!')
         }
-    }, [isSuccess, isError, isLoading,]);
+    }, [isSuccess, isError, isLoading, createCategory]);
     useEffect(() => {
         if (getPCatId !== undefined) {
             dispatch(getAProductCategory(getPCatId));
@@ -53,7 +53,7 @@ const AddCategory = () => {
         if (isError) {
             toast.error("Something Went Wrong!");
         }
-    }, [isSuccess, isError, isLoading]);
+    }, [isSuccess, isError, isLoading, updatedCategory]);
     
     const formik = useFormik({
         enableReinitialize: true,

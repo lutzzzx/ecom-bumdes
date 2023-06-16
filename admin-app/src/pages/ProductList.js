@@ -19,7 +19,6 @@ const columns = [
     {
         title: "Title",
         dataIndex: "title",
-        defaultSortOrder: "descend",
         sorter: (a, b) => a.title.length - b.title.length,
     },
     {
@@ -97,7 +96,7 @@ const ProductList = () => {
                 performAction={() => {
                     deleteProduct(prodId);
                 }}
-                title="Are you sure you want to delete this Product Category?"
+                title="Are you sure you want to delete this Product?"
             />
         </div>
     )

@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../features/prodCategory/prodCategorySlice';
 import Dropzone from 'react-dropzone'
 import { deleteImg, uploadImg } from '../features/upload/uploadSlice';
-import { 
+import {
     createProducts,
     getAProduct,
     updateAProduct,
     resetState
 } from '../features/product/productSlice';
-
 
 let schema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
@@ -28,24 +27,40 @@ let schema = Yup.object().shape({
 
 const AddProduct = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const getProdId = location.pathname.split("/")[3];
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
 
     useEffect(() => {
         dispatch(getCategories());
     }, []);
+
     const categoryState = useSelector((state) => state.prodCategory.prodCategories);
     const imgState = useSelector((state) => state.upload.images);
     const newProduct = useSelector((state) => state.product);
-    const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+    const {
+        isSuccess,
+        isError,
+        isLoading,
+        createdProduct,
+        updatedProduct,
+        products,
+    } = newProduct;
+
+    console.log({newProduct})
+
+    const productData = products?.filter((e) => e._id === getProdId)[0];
+
     useEffect(() => {
         if (isSuccess && createdProduct) {
-            toast.success('Product Added Successfully!')
+            toast.success('Product Added Successfully!');
+            navigate("/admin/product-list");
         }
         if (isError) {
-            toast.error('Something Went Wrong!')
+            toast.error('Something Went Wrong!');
         }
-    }, [isSuccess, isError, isLoading,]);
+    }, [isSuccess, isError, isLoading, createProducts]);
 
     const img = [];
     imgState.forEach((i) => {
@@ -56,29 +71,55 @@ const AddProduct = () => {
     })
     useEffect(() => {
         formik.values.images = img;
-    }, [img]);
+    }, [imgState]);
+
+    useEffect(() => {
+        if (getProdId !== undefined) {
+            dispatch(getAProduct(getProdId));
+        } else {
+            dispatch(resetState());
+        }
+    }, [getProdId]);
+
+    useEffect(() => {
+        if (isSuccess && updatedProduct) {
+            toast.success("Product Updated Successfullly!");
+            navigate("/admin/product-list");
+        }
+        if (isError) {
+            toast.error("Something Went Wrong!");
+        }
+    }, [isSuccess, isError, isLoading, updatedProduct]);
 
     const formik = useFormik({
         initialValues: {
-            title: '',
-            description: '',
-            price: '',
-            category: '',
-            quantity: '',
-            images: '',
+            title: productData?.title || '',
+            description: productData?.description ||'',
+            price: productData?.price || '',
+            category: productData?.category || '',
+            quantity: productData?.quantity || '',
+            images: productData?.images || '',
         },
         validationSchema: schema,
         onSubmit: values => {
-            dispatch(createProducts(values));
-            formik.resetForm();
-            setTimeout(() => {
+            if (getProdId !== undefined) {
+                const data = { id: getProdId, productData: values };
+                dispatch(updateAProduct(data));
                 dispatch(resetState());
-            }, 3000);
+            } else {
+                dispatch(createProducts(values));
+                formik.resetForm();
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 3000);
+            }
         },
     });
     return (
         <div>
-            <h3 className="mb-4 title">Add Product</h3>
+            <h3 className="mb-4 title">
+                {getProdId !== undefined ? "Edit" : "Add"} Product
+            </h3>
             <div>
                 <form onSubmit={formik.handleSubmit} className='d-flex gap-3 flex-column'>
                     <CustomInput
@@ -124,7 +165,7 @@ const AddProduct = () => {
                         className='form-control py-3'
                         id="">
                         <option value="">Select Product Category</option>
-                        {categoryState.map((i, j) => {
+                        {categoryState && categoryState.map((i, j) => {
                             return (
                                 <option key={j} value={i.title}>
                                     {i.title}
@@ -178,7 +219,12 @@ const AddProduct = () => {
                             )
                         })}
                     </div>
-                    <button className='btn btn-success border-0 rounded-3 my-5' type='submit'>Add Product</button>
+                    <button
+                        className="btn btn-success border-0 rounded-3 my-5"
+                        type="submit"
+                    >
+                        {getProdId !== undefined ? "Edit" : "Add"} Product
+                    </button>
                 </form>
             </div>
         </div>
