@@ -43,11 +43,11 @@ router.delete(
   authMiddleware,
   updateProductQuantityFromCart
 );
-router.delete("/empty-cart", authMiddleware, emptyCart);
-router.post("/cart/cash-order", authMiddleware, createOrder);
-router.get("/get-orders", authMiddleware, getOrders);
+/*router.delete("/empty-cart", authMiddleware, emptyCart);*/
+router.post("/cart/create-order", authMiddleware, createOrder);
+/*router.get("/get-orders", authMiddleware, getOrders);
 router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
-router.post("/getorderbyuser/:id", authMiddleware, isAdmin, getOrderByUserId);
+router.post("/getorderbyuser/:id", authMiddleware, isAdmin, getOrderByUserId);*/
 router.get("/all-users", getallUser);
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logOut);

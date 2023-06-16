@@ -1074,7 +1074,8 @@ h1 {
 .checkout-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 30px 0;
+  justify-content: space-between;
 }
 .checkout .form-control {
   border: none;
@@ -1089,13 +1090,14 @@ h1 {
   border-color: var(--color-2);
 }
 .checkout .form-control-half {
-  flex-basis: calc(50% - 15px);
+  flex-basis: calc(50% - 20px);
 }
 .checkout .form-control-full {
   flex-basis: 100%;
 }
 .checkout .link-btn {
-  margin-top: 35px;
+  margin-top: 20px;
+  text-align: center;
   padding: 18px 30px;
   color: var(--color-1);
   background-color: white;
@@ -1103,6 +1105,7 @@ h1 {
   font-size: 18px;
   border-radius: 12px;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
 }
 .checkout .link-btn:hover {
   background-color: rgba(255, 0, 0, 0.15);
@@ -1132,13 +1135,14 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
-.order .order-btn {
+.checkout .order-btn {
   margin-top: 20px;
   background-color: var(--color-2);
   color: var(--color-1);
-  width: 100%;
+  width: 350px;
   text-align: center;
+  border: none;
 }
-.order .order-btn:hover {
+.checkout .order-btn:hover {
   background-color: var(--color-4);
 }

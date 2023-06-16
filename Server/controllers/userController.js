@@ -326,6 +326,27 @@ const updateProductQuantityFromCart = asyncHandler(async (req, res) => {
   }
 });
 
+const createOrder = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { shippingInfo, orderItems, totalPrice, paymentInfo } = req.body;
+  validateMongoDbId(_id);
+  try {
+    const order = await Order.create({
+      shippingInfo,
+      orderItems,
+      totalPrice,
+      paymentInfo,
+      user: _id,
+    });
+    res.json({
+      order,
+      success: true,
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+/*
 // Empty Cart
 const emptyCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
@@ -418,7 +439,7 @@ const getOrderByUserId = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new Error(error);
   }
-});
+}); */
 
 module.exports = {
   createUser,
@@ -435,12 +456,8 @@ module.exports = {
   updatePassword,
   userCart,
   getUserCart,
-  emptyCart,
   createOrder,
-  getOrders,
   loginAdminController,
-  getAllOrders,
-  getOrderByUserId,
   removeProducFromCart,
   updateProductQuantityFromCart,
 };
