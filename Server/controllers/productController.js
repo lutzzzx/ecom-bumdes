@@ -88,7 +88,6 @@ const updateProduct = asyncHandler(async (req, res) => {
         new: true,
       }
     );
-    console.log(updateProduct);
     res.json(updateProduct);
   } catch (error) {
     throw new Error(error);

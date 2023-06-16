@@ -48,8 +48,6 @@ const AddProduct = () => {
         products,
     } = newProduct;
 
-    console.log({ newProduct })
-
     const productData = products?.filter((e) => e._id === getProdId)[0];
 
     useEffect(() => {
