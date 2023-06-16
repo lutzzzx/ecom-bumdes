@@ -32,7 +32,7 @@ router.put("/password", authMiddleware, updatePassword);
 router.post("/login", loginUserController);
 router.post("/admin-login", loginAdminController);
 router.post("/cart", authMiddleware, userCart);
-router.get("/cart/", authMiddleware, getUserCart);
+router.get("/cart", authMiddleware, getUserCart);
 router.delete(
   "/delete-product-cart/:cartItemId",
   authMiddleware,
