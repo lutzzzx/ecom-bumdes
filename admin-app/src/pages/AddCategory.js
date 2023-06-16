@@ -32,10 +32,11 @@ const AddCategory = () => {
     } = newCategory;
     useEffect(() => {
         if (isSuccess && createdCategory) {
-            toast.success('Category Added Successfully!')
+            toast.success('Category Added Successfully!');
+            navigate("/admin/category-list");
         }
         if (isError) {
-            toast.error('Something Went Wrong!')
+            toast.error('Something Went Wrong!');
         }
     }, [isSuccess, isError, isLoading, createCategory]);
     useEffect(() => {

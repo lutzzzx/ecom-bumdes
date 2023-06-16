@@ -48,7 +48,7 @@ const AddProduct = () => {
         products,
     } = newProduct;
 
-    console.log({newProduct})
+    console.log({ newProduct })
 
     const productData = products?.filter((e) => e._id === getProdId)[0];
 
@@ -94,7 +94,7 @@ const AddProduct = () => {
     const formik = useFormik({
         initialValues: {
             title: productData?.title || '',
-            description: productData?.description ||'',
+            description: productData?.description || '',
             price: productData?.price || '',
             category: productData?.category || '',
             quantity: productData?.quantity || '',
@@ -115,6 +115,7 @@ const AddProduct = () => {
             }
         },
     });
+
     return (
         <div>
             <h3 className="mb-4 title">
