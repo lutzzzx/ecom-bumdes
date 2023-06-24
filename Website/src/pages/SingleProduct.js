@@ -20,8 +20,6 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product?.singleproduct);
   const cartState = useSelector((state) => state.auth.cartProducts);
   const navigate = useNavigate();
-  const authState = useSelector((state) => state.auth);
-  const isLoggedIn = authState?.user !== null;
 
   useEffect(() => {
     dispatch(getAProduct(getProductId));
@@ -47,8 +45,9 @@ const SingleProduct = () => {
         })
       );
       setIsInCart(true);
+      localStorage.setItem(isInCart, true); // Store isInCart in localStorage
     } else {
-      navigate("/login"); // ke login page
+      navigate("/login"); // Redirect to the login page
     }
   };
 
@@ -65,16 +64,16 @@ const SingleProduct = () => {
   };
 
   const addToWish = (id) => {
-    if (isLoggedIn) {
-      dispatch(addToWishlist(id));
-    } else {
-      navigate("/login"); // ke login page
-    }
+    dispatch(addToWishlist(id));
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  //cek login
+  const authState = useSelector((state) => state.auth);
+  const isLoggedIn = authState?.user !== null;
 
   return (
     <>
@@ -124,22 +123,45 @@ const SingleProduct = () => {
                   onChange={(e) => setQuantity(e.target.value)}
                   value={quantity}
                 />
-                <h6
-                  className="cart"
-                  onClick={() => {
-                    isInCart ? navigate("/cart") : uploadCart();
-                  }}
-                >
-                  {isInCart ? "Go to Cart" : "Add to Cart"}
-                </h6>
-                <div
-                  className="wish"
-                  onClick={() => {
-                    addToWish(productState?._id);
-                  }}
-                >
-                  <AiOutlineHeart />
-                </div>
+                {isLoggedIn ? (
+                  <>
+                    <h6
+                      className="cart"
+                      onClick={() => {
+                        isInCart ? navigate("/cart") : uploadCart();
+                      }}
+                    >
+                      {isInCart ? "Go to Cart" : "Add to Cart"}
+                    </h6>
+                    <div
+                      className="wish"
+                      onClick={() => {
+                        addToWish(productState?._id);
+                      }}
+                    >
+                      <AiOutlineHeart />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h6
+                      className="cart"
+                      onClick={() => {
+                        isInCart ? navigate("/cart") : uploadCart();
+                      }}
+                    >
+                      {isInCart ? "Go to Cart" : "Add to Cart"}
+                    </h6>
+                    <div
+                      className="wish"
+                      onClick={() => {
+                        addToWish(productState?._id);
+                      }}
+                    >
+                      <AiOutlineHeart />
+                    </div>
+                  </>
+                )}
               </div>
               <p>Stock: {productState?.quantity}</p>
               <p>Sold: {productState?.sold}</p>

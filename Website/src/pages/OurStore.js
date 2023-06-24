@@ -1,24 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
 import ProductCard from "../components/ProductCard";
 import ReactStars from "react-stars";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
+import Paginator from "react-hooks-paginator";
 
 const OurStore = () => {
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product.product);
+  const [sortedProducts, setSortedProducts] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageLimit = 25;
+  const currentData = sortedProducts.slice(offset, offset + pageLimit);
+
   useEffect(() => {
     getProducts();
   }, []);
+
   const getProducts = () => {
     dispatch(getAllProducts());
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    const sortedProducts = [...productState].sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
+    setSortedProducts(sortedProducts);
+    setCurrentPage(1);
+    setOffset(0);
+  }, [productState]);
 
   return (
     <>
@@ -184,13 +198,23 @@ const OurStore = () => {
               </div>
               <div className="main">
                 <div className="product-items">
-                  <ProductCard
-                    data={[...productState].sort(
-                      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-                    )}
+                  <ProductCard data={currentData} />
+                </div>
+                <div className="page">
+                  <Paginator
+                    totalRecords={sortedProducts.length}
+                    pageLimit={pageLimit}
+                    pageNeighbours={2}
+                    setOffset={setOffset}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    pageContainerClass="mb-0 mt-0 pagination justify-content-center"
+                    pagePrevText={<span>&laquo;</span>}
+                    pageNextText={<span>&raquo;</span>}
+                    pageItemClass="custom-page-item"
+                    pageLinkClass="custom-page-link"
                   />
                 </div>
-                <div className="page"></div>
               </div>
             </div>
           </div>

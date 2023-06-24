@@ -33,6 +33,7 @@ const Register = () => {
     validationSchema: registerSchema,
     onSubmit: (values) => {
       dispatch(createUser(values));
+      window.location.href = "/login";
     },
   });
 
