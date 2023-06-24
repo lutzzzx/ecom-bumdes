@@ -23,6 +23,7 @@ let schema = Yup.object().shape({
     price: Yup.number().required('Price is required'),
     category: Yup.string().required('Category is required'),
     quantity: Yup.number().required('Quantity is required'),
+    images: Yup.array(),
 });
 
 const AddProduct = () => {
@@ -48,6 +49,8 @@ const AddProduct = () => {
         products,
     } = newProduct;
 
+    console.log({newProduct});
+
     const productData = products?.filter((e) => e._id === getProdId)[0];
 
     useEffect(() => {
@@ -69,7 +72,7 @@ const AddProduct = () => {
     })
     useEffect(() => {
         formik.values.images = img;
-    }, [imgState]);
+    }, [img]);
 
     useEffect(() => {
         if (getProdId !== undefined) {

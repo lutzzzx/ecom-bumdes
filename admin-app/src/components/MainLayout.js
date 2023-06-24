@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ai';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BiCategoryAlt } from 'react-icons/bi';
+import { BiCategoryAlt, BiLogOutCircle } from 'react-icons/bi';
 import { FaClipboardList } from 'react-icons/fa';
 import { IoIosNotifications } from 'react-icons/io';
 import { Layout, Menu, Button, theme } from 'antd';
@@ -37,7 +37,8 @@ const MainLayout = () => {
                     defaultSelectedKeys={['']}
                     onClick={({ key }) => {
                         if (key == 'signout') {
-
+                            localStorage.clear()
+                            navigate('/')
                         } else {
                             navigate(key);
                         }
@@ -89,6 +90,11 @@ const MainLayout = () => {
                             key: 'enquiries',
                             icon: <FaClipboardList className='fs-4' />,
                             label: 'Enquiries',
+                        },
+                        {
+                            key: 'signout',
+                            icon: <BiLogOutCircle className='fs-4' />,
+                            label: 'Sign Out',
                         },
                     ]}
                 />

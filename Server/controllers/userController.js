@@ -326,6 +326,7 @@ const updateProductQuantityFromCart = asyncHandler(async (req, res) => {
   }
 });
 
+// Create Order For User
 const createOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { shippingInfo, orderItems, totalPrice, paymentInfo } = req.body;
@@ -346,6 +347,7 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 /*
 // Empty Cart
 const emptyCart = asyncHandler(async (req, res) => {

@@ -37,7 +37,7 @@ router.post("/login", loginUserController);
 router.post("/admin-login", loginAdminController);
 router.post("/cart", authMiddleware, userCart);
 router.get("/cart/", authMiddleware, getUserCart);
-router.post("/order/checkout", authMiddleware, checkout);
+outer.post("/order/checkout", authMiddleware, checkout);
 router.post("/order/paymentVerification", authMiddleware, paymentVerification);
 router.delete(
   "/delete-product-cart/:cartItemId",
