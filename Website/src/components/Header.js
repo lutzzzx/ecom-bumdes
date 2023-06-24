@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, link } from "react-router-dom";
 import {
   AiOutlineUser,
@@ -9,10 +9,20 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import NavMenu from "./NavMenu";
 import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { IoHandLeft } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const authState = useSelector((state) => state.auth);
   const isLoggedIn = authState?.user !== null;
+
+  //LOGOUT
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+    toast.success("Logout Successful");
+  };
+
   return (
     <>
       <div className="header">
@@ -73,7 +83,7 @@ const Header = () => {
                             </a>
                           </li>
                           <li>
-                            <Link to={"/"} class="dropdown-item">
+                            <Link onClick={handleLogout} class="dropdown-item">
                               Logout
                             </Link>
                           </li>

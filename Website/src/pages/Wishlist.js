@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
 import ReactStars from "react-stars";
-import { TbTrash } from "react-icons/tb";
+import { TbTrash, TbHeartOff } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProductWishlist } from "../features/user/userSlice";
 import { addToWishlist } from "../features/products/productSlice";
@@ -67,6 +67,7 @@ const Wishlist = () => {
               ))
             ) : (
               <div className="wishlist-empty">
+                <TbHeartOff style={{ fontSize: "8em", marginBottom: "35px" }} />
                 <h5>No items found in wishlist</h5>
                 <Link to="/product" className="btn btn-primary btn-lg">
                   Add Items

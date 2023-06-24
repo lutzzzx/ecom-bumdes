@@ -3,6 +3,7 @@ import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
 import seladaImg from "../images/products/selada.png";
 import { TbTrash } from "react-icons/tb";
+import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -73,6 +74,9 @@ const Cart = () => {
         <main className="cart main-home">
           <div className="container-xxl">
             <div className="empty-cart">
+              <MdOutlineRemoveShoppingCart
+                style={{ fontSize: "8em", marginBottom: "35px" }}
+              />
               <h5 className="mb-2">No items found in cart</h5>
               <Link to={"/product"} className="btn btn-primary btn-lg">
                 Shop Now
