@@ -348,6 +348,20 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 });
 
+const getMyOrders = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+
+  try {
+    const orders = await Order.find({
+      user: _id,
+    })
+      .populate("user")
+      .populate("orderItems.product");
+    res.json({ orders });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 /*
 // Empty Cart
 const emptyCart = asyncHandler(async (req, res) => {
@@ -462,4 +476,5 @@ module.exports = {
   loginAdminController,
   removeProducFromCart,
   updateProductQuantityFromCart,
+  getMyOrders,
 };

@@ -169,6 +169,10 @@ h1 {
   background-color: transparent;
   transform: translateX(5px);
 }
+.main-header .dropdown:hover .dropdown-menu {
+  display: block;
+  right: 0px;
+}
 
 /*SECOND HEADER*/
 .second-header {
@@ -1145,4 +1149,66 @@ h1 {
 }
 .checkout .order-btn:hover {
   background-color: var(--color-4);
+}
+
+.orders {
+  padding: 80px 0;
+}
+.orders p {
+  font-size: 15px;
+}
+.orders-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 0;
+}
+.orders-card {
+  width: calc(50% - 10px);
+  height: auto;
+  background-color: white;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  display: flex;
+}
+.orders-card .details {
+  padding: 15px;
+  width: calc(100% - 285px);
+  height: auto;
+}
+.orders .img-wrapper {
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+  padding: 15px;
+}
+.orders img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+.orders .status {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  height: fit-content;
+}
+.orders .status p {
+  width: fit-content;
+  padding: 7px 12px;
+  border-radius: 10px;
+}
+.orders .status p:nth-child(1) {
+  background-color: rgba(0, 255, 132, 0.2);
+}
+.orders .price {
+  width: 135px;
+  display: flex;
+  align-items: center;
+}
+.orders .price p {
+  padding-left: 15px;
+  border-left: 2px rgb(180, 180, 180) solid;
 }

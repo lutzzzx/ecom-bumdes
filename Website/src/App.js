@@ -13,6 +13,7 @@ import Wishlist from "./pages/Wishlist";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 import { PrivateRoutes } from "./routing/PrivateRoutes";
 import { OpenRoutes } from "./routing/OpenRoutes";
 
@@ -48,6 +49,14 @@ function App() {
               element={
                 <PrivateRoutes>
                   <Checkout />
+                </PrivateRoutes>
+              }
+            ></Route>
+            <Route
+              path="my-orders"
+              element={
+                <PrivateRoutes>
+                  <Orders />
                 </PrivateRoutes>
               }
             ></Route>
