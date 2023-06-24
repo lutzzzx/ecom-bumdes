@@ -20,6 +20,8 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product?.singleproduct);
   const cartState = useSelector((state) => state.auth.cartProducts);
   const navigate = useNavigate();
+  const authState = useSelector((state) => state.auth);
+  const isLoggedIn = authState?.user !== null;
 
   useEffect(() => {
     dispatch(getAProduct(getProductId));
@@ -36,14 +38,18 @@ const SingleProduct = () => {
   }, []);
 
   const uploadCart = () => {
-    dispatch(
-      addProductToCart({
-        productId: productState?._id,
-        quantity,
-        price: productState?.price,
-      })
-    );
-    setIsInCart(true);
+    if (isLoggedIn) {
+      dispatch(
+        addProductToCart({
+          productId: productState?._id,
+          quantity,
+          price: productState?.price,
+        })
+      );
+      setIsInCart(true);
+    } else {
+      navigate("/login"); // ke login page
+    }
   };
 
   //IMAGE
@@ -59,7 +65,11 @@ const SingleProduct = () => {
   };
 
   const addToWish = (id) => {
-    dispatch(addToWishlist(id));
+    if (isLoggedIn) {
+      dispatch(addToWishlist(id));
+    } else {
+      navigate("/login"); // ke login page
+    }
   };
 
   useEffect(() => {

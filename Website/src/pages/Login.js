@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import Landscape from "../images/landscape.jpg";
 import CsLineIcons from "../cs-line-icons/CsLineIcons";
 import Meta from "../components/Meta";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/user/userSlice";
 import Popup from "../components/Popup";
 
@@ -19,6 +19,8 @@ const loginSchema = yup.object({
 });
 
 const Login = () => {
+  const authState = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -30,6 +32,15 @@ const Login = () => {
       dispatch(loginUser(values));
     },
   });
+
+  useEffect(() => {
+    if (authState.isSuccess) {
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      }, 1000);
+    }
+  }, [authState.isSuccess, navigate]);
 
   return (
     <>

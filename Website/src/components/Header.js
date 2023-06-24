@@ -11,6 +11,8 @@ import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
 
 const Header = () => {
+  const authState = useSelector((state) => state.auth);
+  const isLoggedIn = authState?.user !== null;
   return (
     <>
       <div className="header">
@@ -54,32 +56,59 @@ const Header = () => {
                       <MdOutlineShoppingBag className="header-icons" />
                     </Link>
                   </div>
-                  <div className="dropdown">
-                    <Link
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <AiOutlineUser className="header-icons" />
-                    </Link>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <Link to={"login"} class="dropdown-item">
-                          Login
+                  {isLoggedIn ? (
+                    <>
+                      <div className="dropdown">
+                        <Link
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <AiOutlineUser className="header-icons" />
                         </Link>
-                      </li>
-                      <li>
-                        <Link to={"register"} class="dropdown-item" href="#">
-                          Register
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Hello, {authState?.user?.firstname}
+                            </a>
+                          </li>
+                          <li>
+                            <Link to={"/"} class="dropdown-item">
+                              Logout
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="dropdown">
+                        <Link
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <AiOutlineUser className="header-icons" />
                         </Link>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          My Account
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <Link to={"login"} class="dropdown-item">
+                              Login
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to={"register"}
+                              class="dropdown-item"
+                              href="#"
+                            >
+                              Register
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

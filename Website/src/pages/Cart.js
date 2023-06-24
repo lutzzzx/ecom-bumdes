@@ -62,7 +62,10 @@ const Cart = () => {
     return total;
   };
 
-  if (userCartState?.length === 0) {
+  const authState = useSelector((state) => state.auth);
+  const isLoggedIn = authState?.user !== null;
+
+  if (userCartState?.length === 0 || !isLoggedIn) {
     return (
       <>
         <Meta title="BUMDes - Cart" />

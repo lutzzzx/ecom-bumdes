@@ -13,6 +13,8 @@ import Wishlist from "./pages/Wishlist";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import { PrivateRoutes } from "./routing/PrivateRoutes";
+import { OpenRoutes } from "./routing/OpenRoutes";
 
 function App() {
   return (
@@ -24,13 +26,48 @@ function App() {
             <Route path="product" element={<OurStore />}></Route>
             <Route path="about" element={<About />}></Route>
             <Route path="contact" element={<Contact />}></Route>
-            <Route path="wishlist" element={<Wishlist />}></Route>
+            <Route
+              path="wishlist"
+              element={
+                <PrivateRoutes>
+                  <Wishlist />
+                </PrivateRoutes>
+              }
+            ></Route>
             <Route path="product/:id" element={<SingleProduct />}></Route>
-            <Route path="cart" element={<Cart />}></Route>
-            <Route path="checkout" element={<Checkout />}></Route>
+            <Route
+              path="cart"
+              element={
+                <PrivateRoutes>
+                  <Cart />
+                </PrivateRoutes>
+              }
+            ></Route>
+            <Route
+              path="checkout"
+              element={
+                <PrivateRoutes>
+                  <Checkout />
+                </PrivateRoutes>
+              }
+            ></Route>
           </Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="register" element={<Register />}></Route>
+          <Route
+            path="login"
+            element={
+              <OpenRoutes>
+                <Login />
+              </OpenRoutes>
+            }
+          ></Route>
+          <Route
+            path="register"
+            element={
+              <OpenRoutes>
+                <Register />
+              </OpenRoutes>
+            }
+          ></Route>
           <Route path="forgotPassword" element={<ForgotPassword />}></Route>
         </Routes>
       </Router>
