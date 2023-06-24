@@ -15,9 +15,11 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const userCartState = useSelector((state) => state.auth.cartProducts);
+
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
+
   const deleteACartProduct = (id) => {
     dispatch(deleteCartProduct(id));
     setTimeout(() => {
@@ -25,18 +27,29 @@ const Cart = () => {
     }, 200);
   };
 
-  const [productUpdateDetail, setProductUpdateDetail] = useState(null);
+  const [productUpdateDetails, setProductUpdateDetails] = useState({});
+
+  const updateProductQuantity = (itemId, quantity) => {
+    setProductUpdateDetails((prevState) => ({
+      ...prevState,
+      [itemId]: quantity,
+    }));
+  };
+
   useEffect(() => {
-    dispatch(
-      updateCartProduct({
-        cartItemId: productUpdateDetail?.cartItemId,
-        quantity: productUpdateDetail?.quantity,
-      })
-    );
+    for (const itemId in productUpdateDetails) {
+      const quantity = productUpdateDetails[itemId];
+      dispatch(
+        updateCartProduct({
+          cartItemId: itemId,
+          quantity: quantity,
+        })
+      );
+    }
     setTimeout(() => {
       dispatch(getUserCart());
     }, 300);
-  }, [productUpdateDetail]);
+  }, [productUpdateDetails]);
 
   // Menghitung total belanja
   const calculateCartTotal = () => {
@@ -57,9 +70,9 @@ const Cart = () => {
         <main className="cart main-home">
           <div className="container-xxl">
             <div className="empty-cart">
-              <h5 className="mb-2">Your Cart is empty</h5>
+              <h5 className="mb-2">No items found in cart</h5>
               <Link to={"/product"} className="btn btn-primary btn-lg">
-                Go to Store
+                Shop Now
               </Link>
             </div>
           </div>
@@ -89,6 +102,11 @@ const Cart = () => {
             <div className="cart-content">
               {userCartState &&
                 userCartState?.map((item, index) => {
+                  const itemQuantity =
+                    productUpdateDetails[item._id] !== undefined
+                      ? productUpdateDetails[item._id]
+                      : item.quantity;
+
                   return (
                     <div className="items" key={item._id}>
                       <div className="row">
@@ -111,22 +129,14 @@ const Cart = () => {
                             min={1}
                             max={10}
                             className="form-control"
-                            id=""
-                            value={
-                              productUpdateDetail?.quantity
-                                ? productUpdateDetail?.quantity
-                                : item?.quantity
-                            }
+                            value={itemQuantity}
                             onChange={(e) => {
-                              setProductUpdateDetail({
-                                cartItemId: item._id,
-                                quantity: e.target.value,
-                              });
+                              updateProductQuantity(item._id, e.target.value);
                             }}
                           />
                         </div>
                         <div className="col-2">
-                          IDR {item?.price * item?.quantity}
+                          IDR {item?.price * itemQuantity}
                         </div>
                         <div className="col">
                           <div

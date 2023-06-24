@@ -101,14 +101,7 @@ const SingleProduct = () => {
               />
               <p className="description">{productState?.description}</p>
               <hr />
-              <div className={`size ${isInCart ? "hidden" : ""}`}>
-                <h6>Size</h6>
-                <div className="items">
-                  <div className="item">1/2 KG</div>
-                  <div className="item">1 KG</div>
-                  <div className="item">2 KG</div>
-                </div>
-              </div>
+              <div className={` ${isInCart ? "hidden" : ""}`}></div>
               <div className="order">
                 <input
                   type="number"
@@ -138,6 +131,9 @@ const SingleProduct = () => {
                   <AiOutlineHeart />
                 </div>
               </div>
+              <p>Stock: {productState?.quantity}</p>
+              <p>Sold: {productState?.sold}</p>
+              <p>Category: {productState?.category}</p>
             </div>
           </div>
           <div className="related-product">

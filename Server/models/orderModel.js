@@ -46,11 +46,11 @@ var orderSchema = new mongoose.Schema(
       },
     },
     paymentInfo: {
-      orderId: {
+      paymentId: {
         type: String,
         required: true,
       },
-      paymentId: {
+      orderId: {
         type: String,
         required: true,
       },

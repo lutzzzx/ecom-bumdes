@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
 import { Link } from "react-router-dom";
@@ -6,35 +6,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
-
-/*
-const shippingSchema = yup.object({
-  firsName: yup.string().required("First Name is Required"),
-  lastName: yup.string().required("Last Name is Required"),
-  address: yup.string().required("Address is Required"),
-  province: yup.string().required("Province is Required"),
-  city: yup.string().required("City is Required"),
-  subDisrict: yup.string().required("Sub Disrict is Required"),
-  zip: yup.number().required("ZIP is Required"),
-  phone: yup.string().required("Phone Number is Required"),
-  email: yup.string().nullable(),
-}); */
+import axios from "axios";
+import { config } from "../utils/axiosConfig";
+import { createAnOrder } from "../features/user/userSlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.auth.cartProducts);
-  const userCartState = useSelector((state) => state.auth.cartProducts);
+  const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState({
+    paymentId: "",
+    orderId: "",
+  });
+  const [cartProductState, setCartProductState] = useState([]);
+
   // Menghitung total belanja
-  const calculateCartTotal = () => {
-    let total = 0;
-    if (userCartState) {
-      userCartState.forEach((item) => {
-        total += item.price * item.quantity;
-      });
+  useEffect(() => {
+    let sum = 0;
+    for (let index = 0; index < cartState?.length; index++) {
+      sum = sum + Number(cartState[index].quantity) * cartState[index].price;
+      setTotalAmount(sum);
     }
-    return total;
-  };
+  }, [cartState]);
+
+  useEffect(() => {
+    if (paymentInfo.orderId != "" && shippingInfo) {
+      console.log(paymentInfo, shippingInfo);
+      dispatch(
+        createAnOrder({
+          totalPrice: totalAmount,
+          orderItems: cartProductState,
+          paymentInfo,
+          shippingInfo,
+        })
+      );
+    }
+  }, [paymentInfo, shippingInfo]);
 
   const formik = useFormik({
     initialValues: {
@@ -50,8 +58,98 @@ const Checkout = () => {
     },
     onSubmit: (values) => {
       setShippingInfo(values);
+      setTimeout(() => {
+        checkOutHandler();
+      }, 300);
     },
   });
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  useEffect(() => {
+    let items = [];
+    for (let index = 0; index < cartState?.length; index++) {
+      items.push({
+        product: cartState[index].productId._id,
+        quantity: cartState[index].quantity,
+        price: cartState[index].price,
+      });
+    }
+    setCartProductState(items);
+  }, []);
+
+  const checkOutHandler = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      alert("Razorpay SDK failed to load");
+      return;
+    }
+    const result = await axios.post(
+      "http://localhost:5000/api/user/order/checkout",
+      { amount: totalAmount },
+      config
+    );
+    if (!result) {
+      alert("Error");
+      return;
+    }
+
+    const { amount, id: order_id, currency } = result.data.order;
+    const options = {
+      key: "rzp_test_WOR4szfQkohe3N", // Enter the Key ID generated from the Dashboard
+      amount: amount,
+      currency: currency,
+      name: "BUMDes",
+      description: "Order Transaction",
+      image: {},
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+        };
+
+        const result = await axios.post(
+          "http://localhost:5000/api/user/order/paymentVerification",
+          data,
+          config
+        );
+
+        setPaymentInfo({
+          paymentId: response.razorpay_payment_id,
+          orderId: response.razorpay_order_id,
+        });
+      },
+      prefill: {
+        name: "BUMDes",
+        email: "halo@bumdes.com",
+        contact: "08123456789",
+      },
+      notes: {
+        address: "BUMDes",
+      },
+      theme: {
+        color: "#00e275",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
 
   return (
     <>
@@ -176,7 +274,9 @@ const Checkout = () => {
                 <Link to={"/cart"} className="link-btn">
                   Return to Cart
                 </Link>
-                <button className="link-btn order-btn">Place Order</button>
+                <button className="link-btn order-btn" type="submit">
+                  Place Order
+                </button>
               </form>
             </div>
             <div className="order">
@@ -208,7 +308,9 @@ const Checkout = () => {
                 <hr></hr>
                 <div className="row title">
                   <div className="col-6">Total</div>
-                  <div className="col-6 end">IDR {calculateCartTotal()}</div>
+                  <div className="col-6 end">
+                    IDR {totalAmount ? totalAmount : "0"}
+                  </div>
                 </div>
               </div>
             </div>

@@ -67,9 +67,9 @@ const Wishlist = () => {
               ))
             ) : (
               <div className="wishlist-empty">
-                <h5>Your wishlist is empty</h5>
+                <h5>No items found in wishlist</h5>
                 <Link to="/product" className="btn btn-primary btn-lg">
-                  Go to Store
+                  Add Items
                 </Link>
               </div>
             )}
