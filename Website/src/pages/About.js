@@ -4,6 +4,8 @@ import Meta from "../components/Meta";
 import { BsTwitter, BsInstagram, BsYoutube } from "react-icons/bs";
 import { IoMail } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import FotoAbi from "../images/abi.png";
+import FotoLuthfi from "../images/luthfi.png";
 
 const About = () => {
   return (
@@ -36,7 +38,7 @@ const About = () => {
             <div className="member py-4 d-flex justify-content-center gap-4">
               <div className="member-details ">
                 <div className="image-member bantuan-1">
-                  <img src="" alt="" />
+                  <img src={FotoLuthfi} alt="FotoLuthfi" />
                 </div>
                 <div className="biodata">
                   <h5>Luthfi A. Zulfikri</h5>
@@ -59,7 +61,7 @@ const About = () => {
               </div>
               <div className="member-details ">
                 <div className="image-member bantuan-1">
-                  <img src="" alt="" />
+                  <img src={FotoAbi} alt="FotoAbi" />
                 </div>
                 <div className="biodata">
                   <h5>Rizqullah A. Hade</h5>
