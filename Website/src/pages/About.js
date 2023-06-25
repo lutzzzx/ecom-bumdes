@@ -37,7 +37,7 @@ const About = () => {
             <h3 className="text-center">Team Members</h3>
             <div className="member py-4 d-flex justify-content-center gap-4">
               <div className="member-details ">
-                <div className="image-member bantuan-1">
+                <div className="image-member">
                   <img src={FotoLuthfi} alt="FotoLuthfi" />
                 </div>
                 <div className="biodata">
@@ -60,7 +60,7 @@ const About = () => {
                 </div>
               </div>
               <div className="member-details ">
-                <div className="image-member bantuan-1">
+                <div className="image-member">
                   <img src={FotoAbi} alt="FotoAbi" />
                 </div>
                 <div className="biodata">
