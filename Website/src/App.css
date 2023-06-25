@@ -346,9 +346,11 @@ h1 {
   height: 470px;
   padding-bottom: 25px;
   padding-top: 10px;
+  overflow: hidden;
 }
 .home-wrapper-5 .bottom-banner {
   height: 200px;
+  overflow: hidden;
 }
 .home-wrapper-5 .banner {
   background-color: white;
@@ -356,8 +358,14 @@ h1 {
   width: 100%;
   border-radius: 15px;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
-
+.home-wrapper-5 .banner img {
+  height: 100%;
+  width: 100%;
+  object-position: center;
+  object-fit: cover;
+}
 .home-wrapper-6 {
   padding-bottom: 100px;
 }

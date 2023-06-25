@@ -4,6 +4,8 @@ import ProductCard from "../components/ProductCard";
 import Meta from "../components/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
+import BottomBanner1 from "../images/daisy-banner.png";
+import BottomBanner2 from "../images/basreng-banner.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -277,15 +279,14 @@ const Home = () => {
             </h4>
             <div className="row top-banner">
               <div className="col-7">
-                <div className="banner"></div>
+                <div className="banner">
+                  <img src={BottomBanner1}></img>
+                </div>
               </div>
               <div className="col-5">
-                <div className="banner"></div>
-              </div>
-            </div>
-            <div className="row bottom-banner">
-              <div className="col-12">
-                <div className="banner"></div>
+                <div className="banner">
+                  <img src={BottomBanner2}></img>
+                </div>
               </div>
             </div>
           </div>
