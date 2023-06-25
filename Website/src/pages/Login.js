@@ -75,8 +75,8 @@ const Login = () => {
                 Please use your credentials to login.
                 <br />
                 If you are not a member, please{" "}
-                <Link className="text-green-2" to={"/register"}>
-                  register
+                <Link className="text-green-2 bold" to={"/register"}>
+                  <b>register</b>
                 </Link>
                 .
               </p>

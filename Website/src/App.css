@@ -291,7 +291,7 @@ h1 {
 }
 .home-wrapper-2 .servies {
   color: #5c5f62;
-  padding: 0px 100px;
+  padding: 0px 60px;
   font-size: 15px;
 }
 .home-wrapper-2 .servies-images {
@@ -375,7 +375,7 @@ h1 {
   background-color: white;
   color: black;
   height: 330px;
-  width: 190px;
+  width: 199px;
   border-radius: 13px;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.05);
   transition: 0.2s ease;
@@ -558,7 +558,7 @@ h1 {
 }
 .store .categories {
   width: 19%;
-  height: 1200px;
+  height: min-content;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -600,7 +600,7 @@ h1 {
 }
 .store .product-content {
   width: 79%;
-  height: 1200px;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 25px;

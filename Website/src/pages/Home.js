@@ -35,8 +35,8 @@ const Home = () => {
                 <div className="main-banner-content position-absolute">
                   <p className="text-green">Limited Edition</p>
                   <h3>
-                    TAS KULIT <br />
-                    LUXE
+                    LUXE <br />
+                    LEATHER BAG
                   </h3>
                   <p>From IDR 250.000</p>
                   <br />
@@ -55,7 +55,7 @@ const Home = () => {
                   <div className="second-banner-content position-absolute">
                     <p className="text-white">New Arrival</p>
                     <h5>
-                      Sandal <br />
+                      Sandals <br />
                       Breeze
                     </h5>
                     <p>From IDR 150.000</p>
@@ -70,8 +70,7 @@ const Home = () => {
                   <div className="second-banner-content position-absolute">
                     <p className="text-white">Best Seller</p>
                     <h5>
-                      Kerajinan <br />
-                      Tangan
+                      Handicrafts <br />
                     </h5>
                     <p>From IDR 50.000</p>
                   </div>
@@ -85,8 +84,8 @@ const Home = () => {
                   <div className="second-banner-content position-absolute">
                     <p className="text-white">Discount</p>
                     <h5>
-                      Bunga <br />
-                      Daisy
+                      Daisy <br />
+                      Flower
                     </h5>
                     <p>From IDR 15.000</p>
                   </div>
@@ -100,8 +99,8 @@ const Home = () => {
                   <div className="second-banner-content position-absolute">
                     <p className="text-white">Discount</p>
                     <h5>
-                      Keripik <br />
-                      Kentang
+                      Potato <br />
+                      Chip
                     </h5>
                     <p>From IDR 10.000</p>
                   </div>
@@ -134,7 +133,7 @@ const Home = () => {
                 />
                 <div>
                   <h6>Support 24/7</h6>
-                  <p className="mb-0">Dfsdfsf</p>
+                  <p className="mb-0">Round the clock assistance</p>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
@@ -145,7 +144,7 @@ const Home = () => {
                 />
                 <div>
                   <h6>Affordable Prices</h6>
-                  <p className="mb-0">Dfsdfsf</p>
+                  <p className="mb-0">Great value for your money</p>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
@@ -173,7 +172,7 @@ const Home = () => {
               <div className="col-10">
                 <div className="category-content d-flex flex-wrap justify-content-between align-items-center">
                   <div className="item border-bottom border-right">
-                    <h6 className="mb-0">Pakaian</h6>
+                    <h6 className="mb-0">Clothes</h6>
                     <img
                       src="images/categories/male-clothes.png"
                       alt="pakaian pria"
@@ -181,7 +180,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-bottom border-right">
-                    <h6 className="mb-0">Pertuka-ngan</h6>
+                    <h6 className="mb-0">Carpentry</h6>
                     <img
                       src="images/categories/carpenter.png"
                       alt="pertukangan"
@@ -189,7 +188,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-bottom border-right">
-                    <h6 className="mb-0">Keseha-tan</h6>
+                    <h6 className="mb-0">Medicines</h6>
                     <img
                       src="images/categories/first-aid-kit.png"
                       alt="kesehatan"
@@ -197,7 +196,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-bottom border-right">
-                    <h6 className="mb-0">Rumah Tangga</h6>
+                    <h6 className="mb-0">Household Applian-ces</h6>
                     <img
                       src="images/categories/furniture.png"
                       alt="furnitur"
@@ -205,7 +204,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-bottom ">
-                    <h6 className="mb-0">Peralatan Dapur</h6>
+                    <h6 className="mb-0">Kitchen Applian-ces</h6>
                     <img
                       src="images/categories/kitchen.png"
                       alt="dapur"
@@ -213,7 +212,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-right">
-                    <h6 className="mb-0">Sayuran</h6>
+                    <h6 className="mb-0">Vegetables</h6>
                     <img
                       src="images/categories/vegetable.png"
                       alt="sayuran"
@@ -221,7 +220,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-right">
-                    <h6 className="mb-0">Buah-buahan</h6>
+                    <h6 className="mb-0">Fruits</h6>
                     <img
                       src="images/categories/fruits.png"
                       alt="buah-buahan"
@@ -229,7 +228,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-right">
-                    <h6 className="mb-0">Makanan Ringan</h6>
+                    <h6 className="mb-0">Foods</h6>
                     <img
                       src="images/categories/fast-food.png"
                       alt="makanan"
@@ -237,7 +236,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item border-right">
-                    <h6 className="mb-0">Bunga</h6>
+                    <h6 className="mb-0">Flowers</h6>
                     <img
                       src="images/categories/flower-pot.png"
                       alt="bunga"
@@ -245,7 +244,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="item">
-                    <h6 className="mb-0">Kerajinan Tangan</h6>
+                    <h6 className="mb-0">Handy-crafts</h6>
                     <img
                       src="images/categories/porcelain.png"
                       alt="kerajinan"

@@ -137,13 +137,13 @@ const Header = () => {
               </div>
               <div className="col-10">
                 <div className=" d-flex align-items-center justify-content-start gap-5">
-                  <Link>Kesehatan</Link>
-                  <Link>Dapur</Link>
-                  <Link>Rumah Tangga</Link>
-                  <Link>Pertanian</Link>
-                  <Link>Elektronik</Link>
-                  <Link>Fashion pria</Link>
-                  <Link>Fashion wanita</Link>
+                  <Link>Clothes</Link>
+                  <Link>Vegetables</Link>
+                  <Link>Fruits</Link>
+                  <Link>Foods</Link>
+                  <Link>Flowers</Link>
+                  <Link>Medicines</Link>
+                  <Link>Carpentry</Link>
                 </div>
               </div>
             </div>

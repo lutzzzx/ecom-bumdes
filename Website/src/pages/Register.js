@@ -71,7 +71,7 @@ const Register = () => {
                 <br />
                 If you are a member, please{" "}
                 <Link className="text-green-2" to={"/login"}>
-                  login
+                  <b>login</b>
                 </Link>
                 .
               </p>
